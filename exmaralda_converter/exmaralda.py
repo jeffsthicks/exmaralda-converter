@@ -391,7 +391,11 @@ class Event:
         """
 
         indent = '\t'*indentation_level
-        return '{}<event start="T{}" end="T{}">{}</event>'.format(indent, self.get_start_id(), self.get_end_id(), self.content)
+        if self.content.strip() in ["&"]:
+            prettyContent="<![CDATA["+self.content.strip()+" ]]>"
+        else:
+            prettyContent=self.content
+        return '{}<event start="T{}" end="T{}">{}</event>'.format(indent, self.get_start_id(), self.get_end_id(), prettyContent)
 
 
 class Tier:
@@ -530,6 +534,10 @@ class Tier:
     def get_event(self,tli):
         try: return self.event_dict[tli]
         except: return ""
+
+    def del_event(self, e):
+        self.event_list.remove(e)
+        del self.event_dict[e.start.time_id]
 
 
 
