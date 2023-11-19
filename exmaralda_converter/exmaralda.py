@@ -378,6 +378,9 @@ class Event:
 
     def get_content(self):
         return self.content
+    
+    def get_clean_content(self):
+        return self.content.strip().lower()
 
     # printing
 
@@ -486,6 +489,8 @@ class Tier:
     
     def get_event_dict(self):
         return self.event_dict
+    def get_time_ids(self):
+        return self.event_dict.keys()
 
     # printing
 
