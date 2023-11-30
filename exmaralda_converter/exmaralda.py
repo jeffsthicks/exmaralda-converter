@@ -368,6 +368,12 @@ class Event:
     def set_content(self, content):
         self.content = content
 
+    def set_start(self, start):
+        self.start=start
+    def set_end(self,end):
+        self.end= end
+    
+
     # getter
 
     def get_start_id(self):
@@ -841,6 +847,23 @@ class ExmaraldaTranscript:
             self.tiers[tier_id].add_event(event)
         else:
             print(self.tiers.keys())
+    # Validation
+    # This checks to see that none of the events have overlapping timepoints
+
+    def validate(self):
+        for tier in self.tiers.values():
+            support = set()
+            for event in tier.event_list:
+                startIndex = self.timeline.get_index(event.start)
+                endIndex   = self.timeline.get_index(event.end)
+                eventRange = set(range(startIndex,endIndex))
+            if support.intersection(eventRange)== set():
+                support = support.union(eventRange)
+            else:
+                print(f"Error at {eventRange}")
+                return False
+        return True
+
 
     # Printing
 
