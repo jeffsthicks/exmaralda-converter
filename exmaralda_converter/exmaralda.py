@@ -865,6 +865,15 @@ class ExmaraldaTranscript:
         return True
 
 
+    def get_support(self,tier):
+        support = set()
+        for event in tier.event_list:
+            startIndex = self.timeline.get_index(event.start)
+            endIndex   = self.timeline.get_index(event.end)
+            eventRange = set(range(startIndex,endIndex))
+            support = support.union(eventRange)
+        return list(support)
+    
     # Printing
 
     def print_meta_information(self, indentation_level=0):
